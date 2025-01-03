@@ -7,7 +7,7 @@ import {
   getJobsByCompany,
   updateJob,
 } from './db/jobs.js';
-import { getCompany } from './db/companies.js';
+import { companyLoader, getCompany } from './db/companies.js';
 
 export const resolvers = {
   Query: {
@@ -71,7 +71,7 @@ export const resolvers = {
   },
 
   Job: {
-    company: (job) => getCompany(job.companyId),
+    company: (job) => companyLoader.load(job.companyId),
     date: (job) => toIsoDate(job.createdAt),
   },
 };

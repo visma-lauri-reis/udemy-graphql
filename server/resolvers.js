@@ -1,5 +1,6 @@
 import { GraphQLError } from 'graphql';
 import {
+  countJobs,
   createJob,
   deleteJob,
   getJob,
@@ -25,7 +26,11 @@ export const resolvers = {
       }
       return job;
     },
-    jobs: (_root, { limit, offset }) => getJobs(limit, offset),
+    jobs: async (_root, { limit, offset }) => {
+      const items = await getJobs(limit, offset);
+      const totalCount = await countJobs();
+      return { items, totalCount };
+    },
   },
 
   Mutation: {

@@ -8,7 +8,7 @@ export async function getCompany(id) {
 }
 
 export function createCompanyLoader() {
-  new DataLoader(async (ids) => {
+  return new DataLoader(async (ids) => {
     const companies = await getCompanyTable().select().whereIn('id', ids);
     return ids.map((id) => companies.find((company) => company.id === id));
   });
